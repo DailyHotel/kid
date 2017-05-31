@@ -1,11 +1,23 @@
-FROM alpine:latest
+FROM golang:1.8.3-alpine
 
-ADD bin/kid /kid
+MAINTAINER Sonny <bernhardkohler@icloud.com>
+
+RUN apk add --update --no-cache \
+    bash \
+    git \
+    make \
+    ca-certificates
+
+ENV DEX_GIT_BRANCH v2.4.1
+
+RUN git clone --depth 1 --branch $DEX_GIT_BRANCH \
+      https://github.com/coreos/dex.git $GOPATH/src/github.com/coreos/dex \
+ && cd $GOPATH/src/github.com/coreos/dex \
+ && make bin/example-app \
+ && cp bin/example-app /usr/local/bin/
+
+EXPOSE 5555
 
 ADD entrypoint.sh /entrypoint.sh
-
-RUN apk --update add ca-certificates
-
-RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
 CMD ["/entrypoint.sh"]
