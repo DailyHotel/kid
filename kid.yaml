@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
       - name: kid
-        image: camil/kid:0.1
+        image: dailyhotel/kid:0.1
         livenessProbe:
           tcpSocket:
             port: 5555
