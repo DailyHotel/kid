@@ -1,4 +1,4 @@
-FROM golang:1.8.3-alpine
+FROM golang:1.9-alpine
 
 MAINTAINER Sonny <bernhardkohler@icloud.com>
 
@@ -8,7 +8,7 @@ RUN apk add --update --no-cache \
     make \
     ca-certificates
 
-ENV DEX_GIT_BRANCH v2.4.1
+ENV DEX_GIT_BRANCH v2.7.1
 
 RUN git clone --depth 1 --branch $DEX_GIT_BRANCH \
       https://github.com/coreos/dex.git $GOPATH/src/github.com/coreos/dex \
